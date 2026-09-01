@@ -4,7 +4,7 @@
 #                                              __      _| ____|_ __ _ __ ___  _ __ 
 #                                              \ \ /\ / /  _| | '__| '__/ _ \| '__|
 #                                               \ V  V /| |___| |  | | | (_) | |   
-#                                               \_/\_/ |_____|_|  |_|  \___/|_|   
+#                                                \_/\_/ |_____|_|  |_|  \___/|_|   
 #
 #
 #
@@ -32,7 +32,7 @@ else
 	CCOPTS = -Wall
 endif
 
-hmodsListFile = wErrorSubmodulesList.h
+hmodsListFile = wErrorSubmodulesList.x
 extraFldsFile = extraFldsFile.x
 initCSectFile = initCSectFile.x
 
@@ -41,7 +41,11 @@ initCSectFile = initCSectFile.x
 #------------------------------------------------------------------------------------------------------------------------------
 .PHONY:		all clean
 
-all:			$(hmodsListFile) $(extraFldsFile) $(initCSectFile) libwError.so libwError.a
+all:			wError.c wError.h libwError.so libwError.a
+
+w%:			w%.template $(hmodsListFile) $(extraFldsFile) $(initCSectFile)
+			@echo "[ GEN(0) ] $@"
+			@tools/wInclude.py --template=$< --tgtFile=$@
 
 $(hmodsListFile):	$(hmods)
 			@echo "[ GEN(1) ] $@"
@@ -76,4 +80,4 @@ clean:
 			@rm -fv $(objs) $(shobjs) $(hmodsListFile) $(extraFldsFile) $(initCSectFile)
 
 cleanall:		clean
-			@rm -fv libwError.so libwError.a
+			@rm -fv libwError.so libwError.a wError.h wError.c

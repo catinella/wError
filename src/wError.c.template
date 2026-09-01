@@ -83,7 +83,7 @@ bool wError_init (wError_t *obj, wError_exception_t extype) {
 			// Nothing to do
 		break;
 
-#include "initCSectFile.x"
+#winclude <initCSectFile.x>
 
 		default:
 			// ERROR!
