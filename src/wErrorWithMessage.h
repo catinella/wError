@@ -38,21 +38,20 @@
 //
 // [!] In order to obtain a clear look of this script, set the following parameters in your editor: cols=132 tab-size=6
 ----------------------------------------------------------------------------------------------------------------------------------*/
+#pragma once
 
-#ifndef __WERRORWITHMSG__
-#define __WERRORWITHMSG__
-	
 #define WERROR_WITHMESSAGE 8
 #define WERROR_MESSAGE_SIZE 128
+
+typedef struct _we wError_t;
 
 typedef struct {
 	char message[WERROR_MESSAGE_SIZE];
 } wErrorWithMessage_t;
 
 
-//void wErrorWithMessage_init (wError *obj);
+void wErrorWithMessage_init (wError_t *obj);
 
-#endif
 
 // WERROR_SUBCLASS_ID::          WERROR_WITHMESSAGE
 // WERROR_SUBCLASS_EXTRAFIELD::  wErrorWithMessage_t withMessage

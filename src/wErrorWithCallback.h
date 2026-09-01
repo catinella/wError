@@ -38,10 +38,10 @@
 //
 // [!] In order to obtain a clear look of this script, set the following parameters in your editor: cols=132 tab-size=6
 ----------------------------------------------------------------------------------------------------------------------------------*/
+#pragma once
 
-#ifndef __WERRORWITHCLLBCK__
-#define __WERRORWITHCLLBCK__
-	
+typedef struct _we wError_t;
+
 #define WERROR_WITHCALLBACK 10
 
 typedef struct {
@@ -49,9 +49,8 @@ typedef struct {
 } wErrorWithCallback_t;
 
 
-void wErrorWithiCallback_init (wErrorWithCallback_t *obj);
+void wErrorWithCallback_init (wError_t *obj);
 
-#endif
 // WERROR_SUBCLASS_ID::          WERROR_WITHCALLBACK
 // WERROR_SUBCLASS_EXTRAFIELD::  wErrorWithCallback_t withCallback
 // WERROR_SUBCLASS_INITPROC::    wErrorWithCallback_init

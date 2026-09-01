@@ -37,11 +37,12 @@
 //
 // [!] In order to obtain a clear look of this script, set the following parameters in your editor: cols=132 tab-size=6
 ----------------------------------------------------------------------------------------------------------------------------------*/
+#include <wError.h>
 #include <wErrorWithCallback.h>
 #include <stddef.h>
 
-extern void wErrorWithCallback_init (wErrorWithCallback_t *obj) {
-	obj->callBack = NULL;
+extern void wErrorWithCallback_init (wError_t *obj) {
+	obj->withCallback.callBack = NULL;
 
 	return;
 }

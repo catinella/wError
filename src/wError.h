@@ -72,7 +72,7 @@ typedef uint8_t wError_exception_t;
 #define WERROR_LASTWARNING  127
 #define WERROR_LASTERROR    255
 
-typedef struct {
+typedef struct _we {
 	wError_exception_t exceptionType; 
 	wError_ecode_t     errorCode;
 	union {
@@ -96,7 +96,7 @@ typedef struct {
 #define WERROR_DECLARATION(VAR, TYPE, VALUE) \
 	wError_t VAR;                          \
 	wError_init(&VAR, TYPE);               \
-	err.errorCode = VALUE;
+	VAR.errorCode = VALUE;
 
 
 // Generic error codes

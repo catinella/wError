@@ -64,9 +64,6 @@
 #include <wError.h>
 #include <stdbool.h>
 
-// Submodules initialization procedures prototypes
-#include "intProcsFile.x"
-
 bool wError_init (wError_t *obj, wError_exception_t extype) {
 	//
 	// Description

@@ -34,7 +34,6 @@ endif
 
 hmodsListFile = wErrorSubmodulesList.h
 extraFldsFile = extraFldsFile.x
-intProcsFile  = intProcsFile.x
 initCSectFile = initCSectFile.x
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -42,7 +41,7 @@ initCSectFile = initCSectFile.x
 #------------------------------------------------------------------------------------------------------------------------------
 .PHONY:		all clean
 
-all:			$(hmodsListFile) $(extraFldsFile) $(intProcsFile) $(initCSectFile) libwError.so libwError.a
+all:			$(hmodsListFile) $(extraFldsFile) $(initCSectFile) libwError.so libwError.a
 
 $(hmodsListFile):	$(hmods)
 			@echo "[ GEN(1) ] $@"
@@ -51,10 +50,6 @@ $(hmodsListFile):	$(hmods)
 $(extraFldsFile):
 			@echo "[ GEN(2) ] $@"
 			@tools/makeExtrafieldsList.sh $@
-
-$(intProcsFile):
-			@echo "[ GEN(3) ] $@"
-			@tools/makeInitProcsList.sh $@
 
 $(initCSectFile):
 			@echo "[ GEN(4) ] $@"
@@ -78,7 +73,7 @@ libwError.a:	wError-so.o $(shobjs)
 			
 clean:
 			@echo "[ CLEAN ]"
-			@rm -fv $(objs) $(shobjs) $(hmodsListFile) $(extraFldsFile) $(intProcsFile) $(initCSectFile)
+			@rm -fv $(objs) $(shobjs) $(hmodsListFile) $(extraFldsFile) $(initCSectFile)
 
 cleanall:		clean
 			@rm -fv libwError.so libwError.a

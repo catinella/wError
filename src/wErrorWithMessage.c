@@ -40,7 +40,7 @@
 #include <wErrorWithMessage.h>
 #include <string.h>
 
-extern void wErrorWithMessage_init (wError_t *obj) {
+void wErrorWithMessage_init (wError_t *obj) {
 	memset(obj->withMessage.message, '\0', WERROR_MESSAGE_SIZE * sizeof(char));
 	return;
 }
