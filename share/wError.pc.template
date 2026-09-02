@@ -7,4 +7,4 @@ Name: wError
 Description: Generic exceptions handler library for C language
 Version: ##VERSION##
 Cflags: -I${includedir}
-Libs: -L${libdir} -lbar
+Libs: -L${libdir} -lwError
