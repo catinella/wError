@@ -1,0 +1,10 @@
+prefix=##PREFIX##
+exec_prefix=${prefix}
+includedir=${prefix}/include/wError
+libdir=${exec_prefix}/lib
+
+Name: wError
+Description: Generic exceptions handler library for C language
+Version: ##VERSION##
+Cflags: -I${includedir}
+Libs: -L${libdir} -lbar
