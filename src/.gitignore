@@ -1,6 +1,7 @@
 libwError.a
 libwError.so
-wErrorSubmodulesList.h
+wError.c
+wError.h
 *.o
 *-so.o
 *.x
