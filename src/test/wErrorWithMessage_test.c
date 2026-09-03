@@ -27,15 +27,31 @@
 #include <wError.h>
 #include <wError_test.h>
 
+void _longString(char *buffer_a, unsigned int size) {
+	char t = 'A';
+	for (unsigned int x = 0; x < size; x++) {
+		buffer_a[x] = t;
+		if (t >= 'z') t = 'A';
+		else          t++;
+	}
+	buffer_a[size] = '\0';
+
+	return;
+}
+
+
 wError_t function_a() {
 	wError_t err;
+	char buffer[WERROR_MESSAGE_SIZE];
+
+	_longString(buffer, WERROR_MESSAGE_SIZE);
 
 	if (wError_init(&err, WERROR_WITHMESSAGE)) {
 		// ....function's tasks....
 
 		// Error setting
 		WERROR_GETCODE(err) = WERROR_ERROR_GENERIC;
-		sprintf(err.withMessage.message, "%s(): Test message... bla bla bla...", __PRETTY_FUNCTION__);
+		wErrorWithMessage_set(&err, "%s(): %s", __PRETTY_FUNCTION__, buffer);
 
 	} else {
 		// ERROR!

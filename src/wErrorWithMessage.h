@@ -40,8 +40,10 @@
 ----------------------------------------------------------------------------------------------------------------------------------*/
 #pragma once
 
-#define WERROR_WITHMESSAGE 8
-#define WERROR_MESSAGE_SIZE 128
+#include <stdarg.h>
+
+#define WERROR_WITHMESSAGE  8
+#define WERROR_MESSAGE_SIZE 255
 
 typedef struct _we wError_t;
 
@@ -51,6 +53,7 @@ typedef struct {
 
 
 void wErrorWithMessage_init (wError_t *obj);
+void wErrorWithMessage_set  (wError_t *obj, const char *format, ...);
 
 
 // WERROR_SUBCLASS_ID::          WERROR_WITHMESSAGE
