@@ -25,6 +25,17 @@ standard error code, while one with type ID WERROR_WITHCALLBACK allows you to in
 You can easily create new exception-handler types and include them in the wError structure without changing a
 single line of the wError code.
 
+This module defines three numeric areas for the defined error codes:
+.nf
++------------+-------------------------+
+|      1-15  | Success (or info) codes |
+|     16-127 | Warning codes           |
+| 0, 128-255 | Error codes             |
++------------+-------------------------+
+.fi
+.PP
+You can modify the sizes of the zones setting the following symbols WERROR_LASTINFO, WERROR_LASTWARNING, WERROR_LASTERROR
+
 .TP
 .B "HOW TO CREATE A CUSTOM EXCEPTION TYPE"
 
