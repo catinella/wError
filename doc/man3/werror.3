@@ -1,0 +1,157 @@
+.TH WERROR 3 "September 2026" "wError.h" "Library Functions"
+
+.SH NAME
+werror - Generic function return-code handler for C
+
+.SH SYNOPSIS
+.nf
+.B #include <wError.h>
+
+.BI "bool wError_init(wError_t *" obj ", wError_exception_t " extype ");"
+
+.BI "int wError_shellCode(wError_t " obj ");"
+.fi
+
+.SH DESCRIPTION
+This library allows you to return a code that includes all the necessary information of any type.
+Every wError object is a struct composed of one standard part, containing an error code and an exception-type ID,
+and another part that depends on the exception type.
+
+The approach is very similar to C++ exception handling.
+You can consider wError_t as a base class with many derived types, one for every exception type you want to handle.
+For example, an object with type ID WERROR_WITHMESSAGE allows you to include an ASCII message together with the
+standard error code, while one with type ID WERROR_WITHCALLBACK allows you to include a callback.
+
+You can easily create new exception-handler types and include them in the wError structure without changing a
+single line of the wError code.
+
+.TP
+.B "HOW TO CREATE A CUSTOM EXCEPTION TYPE"
+
+In order to create a new exception type, you have to follow these steps:
+
+.IP "0)" 4
+Create the usual pair of code files (<source>.c and <interface>.h) in the wError \fBsrc\fP folder.
+The files must respect the following naming convention:
+\fBwErrorWith<label>.[ch]\fP
+
+.IP "1)" 4
+Create a structure where functions will store all the necessary data
+(eg. wErrorWith<your data type>_init(wError_t *obj)).
+
+.IP "2)" 4
+Define a new data type as an alias for the structure defined above
+(eg. wErrorWith<your data type>_t).
+
+.IP "3)" 4
+Define a not-already-used numeric ID for your new exception-handler type.
+
+.IP "4)" 4
+Develop a function to initialize the fields of your own structure.
+The function's argument must be of type wError_t *.
+
+.IP "5)" 4
+Add comments using the following syntax:
+
+.IP "5.1)" 8
+// WERROR_SUBCLASS_ID:: <the symbol you defined at point 3>
+
+.IP "5.2)" 8
+// WERROR_SUBCLASS_EXTRAFIELD:: <data type you defined at point 2> <name of the union's field>
+
+.IP "5.3)" 8
+// WERROR_SUBCLASS_INITPROC:: <the name of your initialization function (point 4)>
+
+.PP
+At this point, you can rebuild the whole wError project by typing the \fBmake all\fP command.
+The project's scripts will automatically create all the files required to integrate your module with the rest
+of the wError code.
+You will not need to modify a single line of the wError code.
+
+.TP
+.B "HOW TO LINK WERROR TO YOUR APPLICATION"
+
+.PP
+wError is pkgconf-compliant. For further information, please read the \fBpkgconf\fP(1) manpage.
+
+.SH MACROS
+.TP
+.BI "WERROR_GETCODE(" x ")"
+It returns the error code.
+
+.TP
+.BI "WERROR_GETTYPE(" x ")"
+It returns the exception type (WERROR_JUSTCODE, WERROR_WITHMESSAGE, ...).
+
+.TP
+.BI "WERROR_ISERROR(" x ")"
+It returns true only if the return code represents an error.
+
+.TP
+.BI "WERROR_ISWARNING(" x ")"
+It returns true only if the return code reports a warning event.
+
+.TP
+.BI "WERROR_ISSUCCESS(" x ")"
+It returns true only if the return code reports success.
+
+.TP
+.BI "WERROR_DECLARATION(" VAR ", " TYPE ", " VALUE ")"
+It is a useful macro to declare, initialize, and set a wError_t variable.
+
+.SH FUNCTIONS
+
+.TP
+.BI "int wError_shellCode(wError_t " obj ");"
+The numeric error codes used by wError objects use 0 as the generic error code.
+For this reason, they cannot be used directly as POSIX shell exit codes.
+This function converts the error code of the supplied object into a POSIX shell-compliant exit code.
+
+.TP
+.BI "bool wError_init(wError_t *" obj ", wError_exception_t " extype ");"
+This function initializes the supplied object properly according to the given exception type.
+
+.SH EXAMPLE
+
+.EX
+#include <stdio.h>
+#include <string.h>
+#include <wError.h>
+#include <wError_test.h>
+
+wError_t function_a() {
+	wError_t err;
+
+	if (wError_init(&err, WERROR_WITHMESSAGE)) {
+		WERROR_GETCODE(err) = WERROR_ERROR_GENERIC;
+		wErrorWithMessage_set(&err, "%s(): %s", __PRETTY_FUNCTION__, "Event decription....");
+
+	} else {
+		// ERROR!
+		printf("ERROR! Object initialization failed\n");
+	}
+
+	return(err);
+}
+
+int main() {
+	wError_t myerr = function_a();
+
+	if (WERROR_ISERROR(myerr)) {
+		printf("Exception (code=%d) has been correctly detected\n", myerr.errorCode);
+		if (WERROR_GETTYPE(myerr) == WERROR_WITHMESSAGE)
+			printf("Error message: \"%s\"\n", myerr.withMessage.message);
+		else
+			printf("Test FAILED!\n");
+	} else
+		printf("Test FAILED (*) !\n");
+
+	return(0);
+}
+.EE
+
+.SH SEE ALSO
+
+.SH AUTHOR
+Silvano Catinella [catinella@yahoo.com](mailto:catinella@yahoo.com)
+
