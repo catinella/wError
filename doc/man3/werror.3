@@ -135,7 +135,7 @@ wError_t function_a() {
 
 	if (wError_init(&err, WERROR_WITHMESSAGE)) {
 		WERROR_GETCODE(err) = WERROR_ERROR_GENERIC;
-		wErrorWithMessage_set(&err, "%s(): %s", __PRETTY_FUNCTION__, "Event decription....");
+		wErrorWithMessage_set(&err, "%s(): %s", __PRETTY_FUNCTION__, "Event description....");
 
 	} else {
 		// ERROR!
@@ -162,7 +162,10 @@ int main() {
 .EE
 
 .SH SEE ALSO
+In order to see an example of wError using, please consider the following OSS project: \fIhttps://github.com/catinella/wRS485_emulator\fP
 
 .SH AUTHOR
-Silvano Catinella [catinella@yahoo.com](mailto:catinella@yahoo.com)
-
+Silvano Catinella
+.MT catinella@yahoo.com
+catinella@yahoo.com
+.ME
