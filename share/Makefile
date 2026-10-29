@@ -1,10 +1,12 @@
 
+ifeq ($(filter clean cleanall,$(MAKECMDGOALS)),)
 ifndef PREFIX
 $(error PREFIX symbol undefined)
 endif
 
 ifndef VERSION
 $(error VERSION symbol undefined)
+endif
 endif
 
 all:		wError.pc
